@@ -16,6 +16,8 @@
 		035AFF292C95B51A006AFFA2 /* MindVaultTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035AFF282C95B51A006AFFA2 /* MindVaultTests.swift */; };
 		035AFF332C95B51A006AFFA2 /* MindVaultUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035AFF322C95B51A006AFFA2 /* MindVaultUITests.swift */; };
 		035AFF352C95B51A006AFFA2 /* MindVaultUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035AFF342C95B51A006AFFA2 /* MindVaultUITestsLaunchTests.swift */; };
+		035AFF422C95CFB3006AFFA2 /* EntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035AFF412C95CFB3006AFFA2 /* EntryViewController.swift */; };
+		035AFF442C95CFEF006AFFA2 /* TaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035AFF432C95CFEF006AFFA2 /* TaskViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		035AFF2E2C95B51A006AFFA2 /* MindVaultUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MindVaultUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		035AFF322C95B51A006AFFA2 /* MindVaultUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindVaultUITests.swift; sourceTree = "<group>"; };
 		035AFF342C95B51A006AFFA2 /* MindVaultUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindVaultUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		035AFF412C95CFB3006AFFA2 /* EntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryViewController.swift; sourceTree = "<group>"; };
+		035AFF432C95CFEF006AFFA2 /* TaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +110,8 @@
 				035AFF1A2C95B51A006AFFA2 /* Assets.xcassets */,
 				035AFF1C2C95B51A006AFFA2 /* LaunchScreen.storyboard */,
 				035AFF1F2C95B51A006AFFA2 /* Info.plist */,
+				035AFF412C95CFB3006AFFA2 /* EntryViewController.swift */,
+				035AFF432C95CFEF006AFFA2 /* TaskViewController.swift */,
 			);
 			path = MindVault;
 			sourceTree = "<group>";
@@ -259,6 +265,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				035AFF162C95B519006AFFA2 /* ViewController.swift in Sources */,
+				035AFF422C95CFB3006AFFA2 /* EntryViewController.swift in Sources */,
+				035AFF442C95CFEF006AFFA2 /* TaskViewController.swift in Sources */,
 				035AFF122C95B519006AFFA2 /* AppDelegate.swift in Sources */,
 				035AFF142C95B519006AFFA2 /* SceneDelegate.swift in Sources */,
 			);
