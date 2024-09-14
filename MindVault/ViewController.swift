@@ -60,6 +60,7 @@ class ViewController: UIViewController {
     @IBAction func didTapAdd(){
         let vc = storyboard?.instantiateViewController(withIdentifier: "entry") as! EntryViewController
         vc.title = "New Task"
+        
         vc.update = {
             DispatchQueue.main.async{
                 self.updateTasks()
@@ -76,6 +77,7 @@ extension ViewController: UITableViewDelegate{
         
         let vc = storyboard?.instantiateViewController(withIdentifier: "task") as! TaskViewController
         vc.title = "New Task"
+        vc.task = tasks[indexPath.row]
         navigationController?.pushViewController(vc, animated: true)
         }
        
