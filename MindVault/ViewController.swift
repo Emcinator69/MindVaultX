@@ -15,6 +15,9 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .blue
+        self.tableView.backgroundColor = .red
+        
         
         self.title = "Tasks"
         tableView.delegate = self
@@ -70,8 +73,14 @@ class ViewController: UIViewController {
 extension ViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        let vc = storyboard?.instantiateViewController(withIdentifier: "task") as! TaskViewController
+        vc.title = "New Task"
+        navigationController?.pushViewController(vc, animated: true)
+        }
+       
     }
-}
+
 
 extension ViewController: UITableViewDataSource{
     
@@ -81,6 +90,7 @@ extension ViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = tasks[indexPath.row]
+        cell.backgroundColor = UIColor.gray
         return cell
     }
 }
