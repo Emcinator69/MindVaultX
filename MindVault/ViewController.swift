@@ -15,19 +15,59 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //Get all current saved tasks
         
+        self.title = "Tasks"
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        // Setup
+        if !UserDefaults.standard.bool(forKey: "setup") {
+            UserDefaults.standard.set(true, forKey: "setup")
+            UserDefaults.standard.set(Int(0), forKey: "count")
+        }
+        // Get all current saved tasks
+        updateTasks()
     }
+    
+  
+    func updateTasks() {
+        tasks.removeAll()
+        
+        // Retrieve the current task count
+        let count = UserDefaults.standard.integer(forKey: "count")
+        print("COUNT ---", count)
+        
+        // Iterate through all task keys from 0 to count - 1
+        for x in 0..<count {
+            let taskKey = "task_\(x)"
+            print("TASK KEY ---", taskKey)
+            if let task = UserDefaults.standard.string(forKey: taskKey) {
+                print("Task found for key \(taskKey):", task)
+                tasks.append(task) // Append the task to the tasks array
+            } else {
+                print("No task found for key \(taskKey)")
+            }
+        }
+        
+        print("ALL TASKS ---", tasks)
+        tableView.reloadData()
+    }
+
     
     @IBAction func didTapAdd(){
         let vc = storyboard?.instantiateViewController(withIdentifier: "entry") as! EntryViewController
         vc.title = "New Task"
+        vc.update = {
+            DispatchQueue.main.async{
+                self.updateTasks()
+            }
+        }
         navigationController?.pushViewController(vc, animated: true)
     }
 
 }
 
-extension ViewController: UIWebViewDelegate{
+extension ViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         tableView.deselectRow(at: indexPath, animated: true)
     }
