@@ -37,30 +37,33 @@ class ViewController: UIViewController {
         updateTasks()
     }
     
-  
-    func updateTasks() {
+  //kikiriki
+   func updateTasks() {
         tasks.removeAll()
         
         // Retrieve the current task count
         let count = UserDefaults.standard.integer(forKey: "count")
         print("COUNT ---", count)
         
-        // Iterate through all task keys from 0 to count - 1
-        
-        for x in 0..<count {
-            let taskKey = "task_\(x)"
-            print("TASK KEY ---", taskKey)
-            if let task = UserDefaults.standard.string(forKey: taskKey) {
-                print("Task found for key \(taskKey):", task)
-                tasks.append(task) // Append the task to the tasks array
-            } else {
-                print("No task found for key \(taskKey)")
+        // Only iterate if the count is greater than 0
+        if count > 0 {
+            
+            for x in 0..<count {
+                let taskKey = "task_\(x)"
+                print("TASK KEY ---", taskKey)
+                if let task = UserDefaults.standard.string(forKey: taskKey) {
+                    print("Task found for key \(taskKey):", task)
+                    tasks.append(task) // Append the task to the tasks array
+                } else {
+                    print("No task found for key \(taskKey)")
+                }
             }
         }
         
         print("ALL TASKS ---", tasks)
         tableView.reloadData()
     }
+
 
     
     @IBAction func didTapAdd(){
