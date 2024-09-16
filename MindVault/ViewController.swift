@@ -23,42 +23,30 @@ class ViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
-        // Setup
         if !UserDefaults.standard.bool(forKey: "setup") {
             UserDefaults.standard.set(true, forKey: "setup")
             UserDefaults.standard.set(Int(0), forKey: "count")
         }
-        // Get all current saved tasks
-        updateTasks()
+        showTasks()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        updateTasks()
+        showTasks()
     }
     
-  
-    func updateTasks() {
+    func showTasks() {
         tasks.removeAll()
         
-        // Retrieve the current task count
         let count = UserDefaults.standard.integer(forKey: "count")
-        print("COUNT ---", count)
-        
-        // Iterate through all task keys from 0 to count - 1
-        
+                
         for x in 0..<count {
             let taskKey = "task_\(x)"
-            print("TASK KEY ---", taskKey)
             if let task = UserDefaults.standard.string(forKey: taskKey) {
-                print("Task found for key \(taskKey):", task)
-                tasks.append(task) // Append the task to the tasks array
-            } else {
-                print("No task found for key \(taskKey)")
+                tasks.append(task)
             }
         }
         
-        print("ALL TASKS ---", tasks)
         tableView.reloadData()
     }
 
@@ -69,7 +57,7 @@ class ViewController: UIViewController {
         
         vc.update = {
             DispatchQueue.main.async{
-                self.updateTasks()
+                self.showTasks()
             }
         }
         navigationController?.pushViewController(vc, animated: true)
