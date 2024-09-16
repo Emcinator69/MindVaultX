@@ -32,6 +32,11 @@ class ViewController: UIViewController {
         updateTasks()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateTasks()
+    }
+    
   
     func updateTasks() {
         tasks.removeAll()
@@ -41,6 +46,7 @@ class ViewController: UIViewController {
         print("COUNT ---", count)
         
         // Iterate through all task keys from 0 to count - 1
+        
         for x in 0..<count {
             let taskKey = "task_\(x)"
             print("TASK KEY ---", taskKey)
@@ -78,6 +84,8 @@ extension ViewController: UITableViewDelegate{
         let vc = storyboard?.instantiateViewController(withIdentifier: "task") as! TaskViewController
         vc.title = "New Task"
         vc.task = tasks[indexPath.row]
+        vc.taskIndex = indexPath.row
+        
         navigationController?.pushViewController(vc, animated: true)
         }
        
