@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Tasks"
+        self.title = "All Tasks"
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -67,7 +67,7 @@ extension ViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         let vc = storyboard?.instantiateViewController(withIdentifier: "task") as! TaskViewController
-        vc.title = "New Task"
+        vc.title = "Task"
         vc.task = tasks[indexPath.row]
         vc.taskIndex = indexPath.row
         
