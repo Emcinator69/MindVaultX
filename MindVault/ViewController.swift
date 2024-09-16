@@ -15,9 +15,6 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .blue
-        self.tableView.backgroundColor = .red
-        
         
         self.title = "Tasks"
         tableView.delegate = self
@@ -65,7 +62,7 @@ class ViewController: UIViewController {
 
 }
 
-extension ViewController: UITableViewDelegate{
+extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         tableView.deselectRow(at: indexPath, animated: true)
         
@@ -75,20 +72,19 @@ extension ViewController: UITableViewDelegate{
         vc.taskIndex = indexPath.row
         
         navigationController?.pushViewController(vc, animated: true)
-        }
-       
     }
+}
 
 
-extension ViewController: UITableViewDataSource{
-    
+extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tasks.count
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = tasks[indexPath.row]
-        cell.backgroundColor = UIColor.gray
+        cell.backgroundColor = .clear
         return cell
     }
 }
