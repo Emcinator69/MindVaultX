@@ -11,31 +11,29 @@ class TaskViewController: UIViewController {
 
         label.text = task
     
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Delete", style: .done, target: self, action: #selector(deleteTask))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Delete", style: .done, target: self, action: #selector(confirmDeleteTask))
     }
     
-  /*  @objc func deleteTask() {
-        // Check if the task index is set
-        guard let index = taskIndex else {
-            print("Task index is not set.")
-            return
+    //confirm before deleting
+    @objc func confirmDeleteTask(){
+        //create alert
+        let alert = UIAlertController (title: "Delete Note", message: "Are Ya Sure of That?", preferredStyle: .alert)
+        
+        //confirm/yes action
+        let yesAction = UIAlertAction (title: "YAS", style: .destructive) {
+            [weak self] _ in self?.deleteTask() // Call deleteTask if confirmed
         }
-
-        // Retrieve the current count of tasks
-        let count = UserDefaults.standard.integer(forKey: "count")
+        //no action
+        let noAction = UIAlertAction (title: "NICHT", style: .cancel, handler: nil)
         
-        // Remove the task from UserDefaults using the task index
-        UserDefaults.standard.removeObject(forKey: "task_\(index)")
+        //add actions to alert
+        alert.addAction(yesAction)
+        alert.addAction(noAction)
         
-        // Update the count of tasks after deletion
-        let newCount = count - 1
-        UserDefaults.standard.set(newCount, forKey: "count")
-
-        print("Deleted task at index \(index), new task count is \(newCount)")
-        
-        // Return to the previous screen after deletion
-        navigationController?.popViewController(animated: true)
-    }*/
+        //Show the alert
+        present(alert, animated: true, completion: nil)
+    }
+    
     
     @objc func deleteTask() {
         // Check if the task index is set
