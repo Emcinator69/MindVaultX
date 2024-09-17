@@ -15,8 +15,9 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .blue
-        self.tableView.backgroundColor = .red
+        self.view.backgroundColor = .darkGray
+        self.tableView.backgroundColor = .gray
+        
         
         
         self.title = "Tasks"
