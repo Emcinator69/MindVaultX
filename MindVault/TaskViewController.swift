@@ -1,12 +1,12 @@
 import UIKit
 
 class TaskViewController: UIViewController {
-
+    
     @IBOutlet weak var descriptionLabel: UITextField!
     
     var task: String?
     var taskIndex: Int?  // Track the index of the task to be edited or deleted
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .lightGray
@@ -77,7 +77,7 @@ class TaskViewController: UIViewController {
     // Load task details function
     func loadTaskDetails() {
         self.view.backgroundColor = .gray
-
+        
         guard let index = taskIndex else {
             print("Task index is not set.")
             return
@@ -115,7 +115,7 @@ class TaskViewController: UIViewController {
             print("Task index is not set.")
             return
         }
-
+        
         var count = UserDefaults.standard.integer(forKey: "count")
         
         if index >= count || index < 0 {
@@ -150,7 +150,7 @@ class TaskViewController: UIViewController {
         fetchAllTasks()
         navigationController?.popViewController(animated: true)
     }
-
+    
     func fetchAllTasks() {
         var tasks = [String]()
         let count = UserDefaults.standard.integer(forKey: "count")

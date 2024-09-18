@@ -8,7 +8,7 @@
 import UIKit
 
 class EntryViewController: UIViewController, UITextFieldDelegate {
-
+    
     
     @IBOutlet var field: UITextField!
     @IBOutlet var descriptionField: UITextField!
@@ -35,13 +35,13 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
         
         return true
     }
-
+    
     @objc func saveTask() {
         guard let text = field.text, !text.isEmpty,
-        let description = descriptionField.text else {
+              let description = descriptionField.text else {
             return
         }
-
+        
         // Retrieve the current task count
         let count = UserDefaults.standard.integer(forKey: "count")
         
@@ -54,13 +54,13 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
         UserDefaults.standard.set(newCount, forKey: "count")
         
         print("Saved task under task_\(count), new count is \(newCount)")
-
+        
         // Notify the view to update
         update?()
         
         // Pop the view controller
         navigationController?.popViewController(animated: true)
     }
-
-
+    
+    
 }

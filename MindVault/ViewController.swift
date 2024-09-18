@@ -8,7 +8,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
     @IBOutlet var tableView: UITableView!
     
     var tasks = [String]()
@@ -39,8 +39,8 @@ class ViewController: UIViewController {
         updateTasks()
     }
     
-  //update task function
-   func updateTasks() {
+    //update task function
+    func updateTasks() {
         tasks.removeAll()
         
         // Retrieve the current task count
@@ -65,8 +65,8 @@ class ViewController: UIViewController {
         print("ALL TASKS ---", tasks)
         tableView.reloadData()
     }
-
-
+    
+    
     
     @IBAction func didTapAdd(){
         let vc = storyboard?.instantiateViewController(withIdentifier: "entry") as! EntryViewController
@@ -80,7 +80,7 @@ class ViewController: UIViewController {
         }
         navigationController?.pushViewController(vc, animated: true)
     }
-
+    
 }
 
 extension ViewController: UITableViewDelegate{
@@ -93,9 +93,9 @@ extension ViewController: UITableViewDelegate{
         vc.taskIndex = indexPath.row
         
         navigationController?.pushViewController(vc, animated: true)
-        }
-       
     }
+    
+}
 
 
 extension ViewController: UITableViewDataSource{
