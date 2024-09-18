@@ -71,6 +71,36 @@ class TaskViewController: UIViewController {
     }
     
     // Function to delete a task
+//    @objc func deleteTask() {
+//        guard let index = taskIndex else {
+//            print("Task index is not set.")
+//            return
+//        }
+//
+//        var count = UserDefaults.standard.integer(forKey: "count")
+//        
+//        if index >= count || index < 0 {
+//            print("Invalid task index.")
+//            return
+//        }
+//        
+//        UserDefaults.standard.removeObject(forKey: "task_\(index)")
+//        
+//        for i in index..<count-1 {
+//            let nextTask = UserDefaults.standard.string(forKey: "task_\(i + 1)")
+//            UserDefaults.standard.set(nextTask, forKey: "task_\(i)")
+//        }
+//        
+//        UserDefaults.standard.removeObject(forKey: "task_\(count - 1)")
+//        
+//        count -= 1
+//        UserDefaults.standard.set(count, forKey: "count")
+//        
+//        print("Deleted task at index \(index), new task count is \(count)")
+//        
+//        fetchAllTasks()
+//        navigationController?.popViewController(animated: true)
+//    }
     @objc func deleteTask() {
         guard let index = taskIndex else {
             print("Task index is not set.")
@@ -84,23 +114,34 @@ class TaskViewController: UIViewController {
             return
         }
         
+        // Remove the task and its description
         UserDefaults.standard.removeObject(forKey: "task_\(index)")
+        UserDefaults.standard.removeObject(forKey: "task_description_\(index)")
         
+        // Shift tasks to fill the gap
         for i in index..<count-1 {
             let nextTask = UserDefaults.standard.string(forKey: "task_\(i + 1)")
+            let nextDescription = UserDefaults.standard.string(forKey: "task_description_\(i + 1)")
+            
             UserDefaults.standard.set(nextTask, forKey: "task_\(i)")
+            UserDefaults.standard.set(nextDescription, forKey: "task_description_\(i)")
         }
         
+        // Remove the last task and description
         UserDefaults.standard.removeObject(forKey: "task_\(count - 1)")
+        UserDefaults.standard.removeObject(forKey: "task_description_\(count - 1)")
         
+        // Update the count
         count -= 1
         UserDefaults.standard.set(count, forKey: "count")
         
         print("Deleted task at index \(index), new task count is \(count)")
         
+        // Notify the view to update
         fetchAllTasks()
         navigationController?.popViewController(animated: true)
     }
+
     
     func fetchAllTasks() {
         var tasks = [String]()
