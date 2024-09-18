@@ -18,16 +18,21 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         field.delegate = self
+        self.navigationController?.navigationBar.tintColor = .black
         
         field.autocorrectionType = .no // removed autocorrect
         descriptionField.autocorrectionType = .no
         
-        //apperance
+        //view apperance
         view.backgroundColor = .darkGray
         field.backgroundColor = .gray
         descriptionField.backgroundColor = .gray
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveTask))
+        //save button for new task
+        var uibarbutton = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveTask))
+        
+        navigationItem.rightBarButtonItem = uibarbutton
+        uibarbutton.tintColor = .black
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         

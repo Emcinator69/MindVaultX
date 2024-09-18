@@ -13,17 +13,20 @@ class TaskViewController: UIViewController {
         self.title = task
         descriptionLabel.backgroundColor = .darkGray
         
+        
         // Update the title and description labels with task data
         loadTaskDetails()
         
         // Create edit button
         let editButton = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(editDescription))
+        editButton.tintColor = .black
         
         // Create delete button
         let deleteButton = UIBarButtonItem(title: "Delete", style: .done, target: self, action: #selector(confirmDeleteTask))
+        deleteButton.tintColor = .black
         
         // Add both buttons to the navigation bar
-        navigationItem.rightBarButtonItems = [editButton, deleteButton]
+        navigationItem.rightBarButtonItems = [deleteButton, editButton]
     }
     
     // Edit description function
@@ -45,7 +48,8 @@ class TaskViewController: UIViewController {
         
         let saveAction = UIAlertAction(title: "Save", style: .default) { [weak self] _ in
             guard let newDescription = alert.textFields?.first?.text else { return }
-            self?.saveUpdatedDescription(newDescription)  // Call to save updated description
+            self?.saveUpdatedDescription(newDescription)// Call to save updated description
+            self?.navigationController?.popViewController(animated: true)
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)

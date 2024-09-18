@@ -17,10 +17,6 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .darkGray
         self.tableView.backgroundColor = .gray
-        
-        
-        
-        
         self.title = "All Tasks"
         tableView.delegate = self
         tableView.dataSource = self
@@ -39,42 +35,6 @@ class ViewController: UIViewController {
         updateTasks()
     }
     
-    //update task function
-//    func updateTasks() {
-//        tasks.removeAll()
-//        
-//        // Retrieve the current task count
-//        let count = UserDefaults.standard.integer(forKey: "count")
-//        print("COUNT ---", count)
-//        
-//        // Only iterate if the count is greater than 0
-//        if count > 0 {
-//            
-//            for x in 0..<count {
-//                let taskKey = "task_\(x)"
-//                let timestampKey = "task_timestamp_\(x)"
-//                
-//                print("TASK KEY ---", taskKey)
-//                
-//                if let task = UserDefaults.standard.string(forKey: taskKey) {
-//                    let timestamp = UserDefaults.standard.string(forKey: timestampKey)
-//                        //appeniding task with its timestamp
-//                    let taskWithTimestamp = "\(task) (Created at: \(String(describing: timestamp)))"
-//                        
-//                                        print("Task found for key \(taskKey):", taskWithTimestamp)
-//                        
-//                                        tasks.append(taskWithTimestamp)
-//
-//                    print("Task found for key \(taskKey):", task)
-//                    
-//                    tasks.append(task) // Append the task to the tasks array
-//                    
-//                    
-//                } else {
-//                    print("No task found for key \(taskKey)")
-//                }
-//            }
-//        }
     func updateTasks() {
         tasks.removeAll()
         
@@ -82,48 +42,27 @@ class ViewController: UIViewController {
         let count = UserDefaults.standard.integer(forKey: "count")
         print("COUNT ---", count)
         
-        // Only iterate if the count is greater than 0
-//        if count > 0 {
-//            for x in 0..<count {
-//                let taskKey = "task_\(x)"
-//                let timestampKey = "task_timestamp_\(x)"
-//                
-//                print("TASK KEY ---", taskKey)
-//                
-//                if let task = UserDefaults.standard.string(forKey: taskKey) {
-//                    let timestamp = UserDefaults.standard.string(forKey: timestampKey)
-//                    
-//                    // Append the task with its timestamp only once
-//                    let taskWithTimestamp: String
-//                    if let timestamp = timestamp {
-//                        taskWithTimestamp = "\(task) (Created at: \(timestamp))"
-//                    } else {
-//                        taskWithTimestamp = task
-//                    }
-//                    
-//                    print("Task found for key \(taskKey):", taskWithTimestamp)
-//                    tasks.append(taskWithTimestamp)
         if count > 0 {
-                for x in 0..<count {
-                    let taskKey = "task_\(x)"
-                    let timestampKey = "task_timestamp_\(x)"
+            for x in 0..<count {
+                let taskKey = "task_\(x)"
+                let timestampKey = "task_timestamp_\(x)"
+                
+                print("TASK KEY ---", taskKey)
+                
+                if let task = UserDefaults.standard.string(forKey: taskKey) {
+                    // Retrieve timestamp
+                    let timestamp = UserDefaults.standard.string(forKey: timestampKey)
                     
-                    print("TASK KEY ---", taskKey)
+                    // Append the task with its timestamp
+                    let taskWithTimestamp: String
+                    if let timestamp = timestamp {
+                        taskWithTimestamp = "\(task) (\(timestamp))"
+                    } else {
+                        taskWithTimestamp = "\(task) (Created at: No timestamp)"
+                    }
                     
-                    if let task = UserDefaults.standard.string(forKey: taskKey) {
-                        // Retrieve timestamp
-                        let timestamp = UserDefaults.standard.string(forKey: timestampKey)
-                        
-                        // Append the task with its timestamp
-                        let taskWithTimestamp: String
-                        if let timestamp = timestamp {
-                            taskWithTimestamp = "\(task) (\(timestamp))"
-                        } else {
-                            taskWithTimestamp = "\(task) (Created at: No timestamp)"
-                        }
-                        
-                        print("Task found for key \(taskKey):", taskWithTimestamp)
-                        tasks.append(taskWithTimestamp)
+                    print("Task found for key \(taskKey):", taskWithTimestamp)
+                    tasks.append(taskWithTimestamp)
                     
                 } else {
                     print("No task found for key \(taskKey)")
@@ -134,7 +73,7 @@ class ViewController: UIViewController {
         print("ALL TASKS ---", tasks)
         tableView.reloadData()
     }
-
+    
     
     
     
@@ -167,18 +106,6 @@ extension ViewController: UITableViewDelegate{
     
 }
 
-
-//extension ViewController: UITableViewDataSource{
-//    
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return tasks.count
-//    }
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-//        cell.textLabel?.text = tasks[indexPath.row]
-//        cell.backgroundColor = UIColor.gray
-//        return cell
-//    }
 extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -213,5 +140,5 @@ extension ViewController: UITableViewDataSource {
     }
 }
 
-    
+
 
