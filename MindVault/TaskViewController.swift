@@ -10,6 +10,7 @@ class TaskViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .lightGray
         label.text = task
+        self.title = task
     
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Delete", style: .done, target: self, action: #selector(confirmDeleteTask))
     }
@@ -17,7 +18,7 @@ class TaskViewController: UIViewController {
     //confirm before deleting
     @objc func confirmDeleteTask(){
         //create alert
-        let alert = UIAlertController (title: "Delete Note", message: "Are Ya Sure of That?", preferredStyle: .alert)
+        let alert = UIAlertController (title: "Delete Task?", message: "Are Ya Sure of That?", preferredStyle: .alert)
         
         //confirm/yes action
         let yesAction = UIAlertAction (title: "YAS", style: .destructive) {
@@ -34,7 +35,7 @@ class TaskViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    
+    //function to delete a task
     @objc func deleteTask() {
         // Check if the task index is set
         guard let index = taskIndex else {
