@@ -50,6 +50,23 @@ class TaskViewController: UIViewController {
         alert.addAction(yesAction)
         alert.addAction(noAction)
         
+        
+           // Customize the appearance of the alert
+           let subview = alert.view.subviews.first?.subviews.first?.subviews.first
+           subview?.backgroundColor = .yellow
+           subview?.layer.cornerRadius = 10
+           
+//           // Customize button appearance
+//           let messageLabel = alert.view.subviews.first?.subviews.first?.subviews.first?.subviews.first?.subviews.first as? UILabel
+//           messageLabel?.textColor = .white
+//
+//           let buttonSubviews = alert.view.subviews.first?.subviews.first?.subviews.flatMap { $0.subviews }
+//           buttonSubviews?.forEach { button in
+//               if let actionButton = button as? UIButton {
+//                   actionButton.setTitleColor(.black, for: .normal)
+//               }
+//           }
+        
         present(alert, animated: true, completion: nil)
     }
     
