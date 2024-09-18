@@ -38,7 +38,7 @@ class ViewController: UIViewController {
         updateTasks()
     }
     
-  //kikiriki
+  //update task function
    func updateTasks() {
         tasks.removeAll()
         

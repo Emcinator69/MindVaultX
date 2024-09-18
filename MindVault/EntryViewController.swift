@@ -9,7 +9,9 @@ import UIKit
 
 class EntryViewController: UIViewController, UITextFieldDelegate {
 
+    
     @IBOutlet var field: UITextField!
+    @IBOutlet var descriptionField: UITextField!
     
     var update: (() -> Void)?
     
@@ -17,7 +19,13 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         field.delegate = self
         
-        field.autocorrectionType = .no
+        field.autocorrectionType = .no // removed autocorrect
+        descriptionField.autocorrectionType = .no
+        
+        //apperance
+        view.backgroundColor = .darkGray
+        field.backgroundColor = .gray
+        descriptionField.backgroundColor = .gray
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveTask))
     }
@@ -29,7 +37,8 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
     }
 
     @objc func saveTask() {
-        guard let text = field.text, !text.isEmpty else {
+        guard let text = field.text, !text.isEmpty,
+        let description = descriptionField.text else {
             return
         }
 
@@ -38,6 +47,7 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
         
         // Save the new task under the current count
         UserDefaults.standard.set(text, forKey: "task_\(count)")
+        UserDefaults.standard.set(description, forKey: "task_description_\(count)")
         
         // Increment the count and save it back to UserDefaults
         let newCount = count + 1
