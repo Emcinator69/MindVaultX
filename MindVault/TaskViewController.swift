@@ -4,11 +4,9 @@ class TaskViewController: UIViewController {
 
     @IBOutlet weak var descriptionLabel: UITextField!
     
-
-    
     var task: String?
-    var taskIndex: Int?  // Added this to track the index of the task to be deleted
-    
+    var taskIndex: Int?  // Track the index of the task to be edited or deleted
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .lightGray
@@ -18,10 +16,65 @@ class TaskViewController: UIViewController {
         // Update the title and description labels with task data
         loadTaskDetails()
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Delete", style: .done, target: self, action: #selector(confirmDeleteTask))
+        // Create edit button
+        let editButton = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(editDescription))
+        
+        // Create delete button
+        let deleteButton = UIBarButtonItem(title: "Delete", style: .done, target: self, action: #selector(confirmDeleteTask))
+        
+        // Add both buttons to the navigation bar
+        navigationItem.rightBarButtonItems = [editButton, deleteButton]
     }
     
-    //loading task details function
+    // Edit description function
+    @objc func editDescription() {  // Method to handle description editing
+        guard let index = taskIndex else {
+            print("Task index is not set.")
+            return
+        }
+        
+        let currentDescription = UserDefaults.standard.string(forKey: "task_description_\(index)") ?? ""
+        
+        let alert = UIAlertController(title: "Edit Description", message: nil, preferredStyle: .alert)
+        alert.addTextField { textField in
+            textField.text = currentDescription
+            textField.backgroundColor = .gray
+            textField.textColor = .black
+            textField.autocorrectionType = .no
+        }
+        
+        let saveAction = UIAlertAction(title: "Save", style: .default) { [weak self] _ in
+            guard let newDescription = alert.textFields?.first?.text else { return }
+            self?.saveUpdatedDescription(newDescription)  // Call to save updated description
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(saveAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true) {
+            // Customize the appearance of the alert
+            let subview = alert.view.subviews.first?.subviews.first?.subviews.first
+            subview?.backgroundColor = .yellow
+            subview?.layer.cornerRadius = 10
+        }
+    }
+    
+    // Save description update
+    func saveUpdatedDescription(_ newDescription: String) {
+        guard let index = taskIndex else {
+            print("Task index is not set.")
+            return
+        }
+        
+        UserDefaults.standard.set(newDescription, forKey: "task_description_\(index)")
+        descriptionLabel.text = newDescription
+        
+        print("Updated description for task at index \(index)")
+    }
+    
+    // Load task details function
     func loadTaskDetails() {
         self.view.backgroundColor = .gray
 
@@ -33,8 +86,6 @@ class TaskViewController: UIViewController {
         // Retrieve description from the selected task
         let description = UserDefaults.standard.string(forKey: "task_description_\(index)") ?? "No description"
         descriptionLabel.text = description
-        
-
     }
     
     // Confirm before deleting
@@ -50,57 +101,15 @@ class TaskViewController: UIViewController {
         alert.addAction(yesAction)
         alert.addAction(noAction)
         
-        
-           // Customize the appearance of the alert
-           let subview = alert.view.subviews.first?.subviews.first?.subviews.first
-           subview?.backgroundColor = .yellow
-           subview?.layer.cornerRadius = 10
-           
-//           // Customize button appearance
-//           let messageLabel = alert.view.subviews.first?.subviews.first?.subviews.first?.subviews.first?.subviews.first as? UILabel
-//           messageLabel?.textColor = .white
-//
-//           let buttonSubviews = alert.view.subviews.first?.subviews.first?.subviews.flatMap { $0.subviews }
-//           buttonSubviews?.forEach { button in
-//               if let actionButton = button as? UIButton {
-//                   actionButton.setTitleColor(.black, for: .normal)
-//               }
-//           }
+        // Customize the appearance of the alert
+        let subview = alert.view.subviews.first?.subviews.first?.subviews.first
+        subview?.backgroundColor = .yellow
+        subview?.layer.cornerRadius = 10
         
         present(alert, animated: true, completion: nil)
     }
     
     // Function to delete a task
-//    @objc func deleteTask() {
-//        guard let index = taskIndex else {
-//            print("Task index is not set.")
-//            return
-//        }
-//
-//        var count = UserDefaults.standard.integer(forKey: "count")
-//        
-//        if index >= count || index < 0 {
-//            print("Invalid task index.")
-//            return
-//        }
-//        
-//        UserDefaults.standard.removeObject(forKey: "task_\(index)")
-//        
-//        for i in index..<count-1 {
-//            let nextTask = UserDefaults.standard.string(forKey: "task_\(i + 1)")
-//            UserDefaults.standard.set(nextTask, forKey: "task_\(i)")
-//        }
-//        
-//        UserDefaults.standard.removeObject(forKey: "task_\(count - 1)")
-//        
-//        count -= 1
-//        UserDefaults.standard.set(count, forKey: "count")
-//        
-//        print("Deleted task at index \(index), new task count is \(count)")
-//        
-//        fetchAllTasks()
-//        navigationController?.popViewController(animated: true)
-//    }
     @objc func deleteTask() {
         guard let index = taskIndex else {
             print("Task index is not set.")
@@ -142,7 +151,6 @@ class TaskViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
 
-    
     func fetchAllTasks() {
         var tasks = [String]()
         let count = UserDefaults.standard.integer(forKey: "count")
