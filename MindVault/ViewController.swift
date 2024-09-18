@@ -20,6 +20,7 @@ class ViewController: UIViewController {
         
         
         
+        
         self.title = "All Tasks"
         tableView.delegate = self
         tableView.dataSource = self
@@ -70,6 +71,7 @@ class ViewController: UIViewController {
     @IBAction func didTapAdd(){
         let vc = storyboard?.instantiateViewController(withIdentifier: "entry") as! EntryViewController
         vc.title = "New Task"
+        
         
         vc.update = {
             DispatchQueue.main.async{

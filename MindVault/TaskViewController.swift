@@ -4,6 +4,8 @@ class TaskViewController: UIViewController {
 
     @IBOutlet weak var descriptionLabel: UITextField!
     
+
+    
     var task: String?
     var taskIndex: Int?  // Added this to track the index of the task to be deleted
     
@@ -11,6 +13,7 @@ class TaskViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .lightGray
         self.title = task
+        descriptionLabel.backgroundColor = .darkGray
         
         // Update the title and description labels with task data
         loadTaskDetails()
@@ -20,6 +23,8 @@ class TaskViewController: UIViewController {
     
     //loading task details function
     func loadTaskDetails() {
+        self.view.backgroundColor = .gray
+
         guard let index = taskIndex else {
             print("Task index is not set.")
             return
@@ -28,6 +33,8 @@ class TaskViewController: UIViewController {
         // Retrieve description from the selected task
         let description = UserDefaults.standard.string(forKey: "task_description_\(index)") ?? "No description"
         descriptionLabel.text = description
+        
+
     }
     
     // Confirm before deleting
