@@ -49,6 +49,10 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
         UserDefaults.standard.set(text, forKey: "task_\(count)")
         UserDefaults.standard.set(description, forKey: "task_description_\(count)")
         
+        //Save the time stamp
+        let timestamp = Date().description(with: .current)
+        UserDefaults.standard.set(timestamp, forKey: "task_timestamp_\(count)")
+        
         // Increment the count and save it back to UserDefaults
         let newCount = count + 1
         UserDefaults.standard.set(newCount, forKey: "count")
