@@ -22,14 +22,21 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
         
         field.autocorrectionType = .no // removed autocorrect
         descriptionField.autocorrectionType = .no
-        
-        //view apperance
+        //View Appearance
         view.backgroundColor = .darkGray
         field.backgroundColor = .gray
         descriptionField.backgroundColor = .gray
         
+        // BLACK BORDER TO TITLE INPUT BOX
+        field.layer.borderColor = UIColor.black.cgColor // Set border color to black
+        field.layer.borderWidth = 1.0 // Set border width
+        
+        // BLACK BORDER TO DESCRIPTION INPUT BOX
+        descriptionField.layer.borderColor = UIColor.black.cgColor // Set border color to black
+        descriptionField.layer.borderWidth = 1.0 // Set border width
+        
         //save button for new task
-        var uibarbutton = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveTask))
+        let uibarbutton = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveTask))
         
         navigationItem.rightBarButtonItem = uibarbutton
         uibarbutton.tintColor = .black
@@ -54,9 +61,11 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
         UserDefaults.standard.set(text, forKey: "task_\(count)")
         UserDefaults.standard.set(description, forKey: "task_description_\(count)")
         
-        //Save the time stamp
-        let timestamp = Date().description(with: .current)
-        UserDefaults.standard.set(timestamp, forKey: "task_timestamp_\(count)")
+        // Save the current timestamp when the task is created
+        let dateFormatter = DateFormatter() // Create a DateFormatter instance
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss" // Set the desired date format
+        let timestamp = dateFormatter.string(from: Date()) // Format the current date
+        UserDefaults.standard.set(timestamp, forKey: "task_timestamp_\(count)") // Save formatted timestamp
         
         // Increment the count and save it back to UserDefaults
         let newCount = count + 1
@@ -70,6 +79,7 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
         // Pop the view controller
         navigationController?.popViewController(animated: true)
     }
+    
     
     
 }

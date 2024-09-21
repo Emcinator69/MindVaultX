@@ -13,9 +13,14 @@ class TaskViewController: UIViewController {
         self.title = task
         descriptionLabel.backgroundColor = .darkGray
         
-        
         // Update the title and description labels with task data
         loadTaskDetails()
+        // Add a black border around the descriptionLabel
+            descriptionLabel.layer.borderColor = UIColor.black.cgColor
+            descriptionLabel.layer.borderWidth = 1.0 // Adjust the width as needed
+            descriptionLabel.layer.cornerRadius = 5.0 // Optional: round the corners
+            descriptionLabel.clipsToBounds = true // Ensure the corners are clipped
+
         
         // Create edit button
         let editButton = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(editDescription))
@@ -48,7 +53,7 @@ class TaskViewController: UIViewController {
         
         let saveAction = UIAlertAction(title: "Save", style: .default) { [weak self] _ in
             guard let newDescription = alert.textFields?.first?.text else { return }
-            self?.saveUpdatedDescription(newDescription)// Call to save updated description
+            self?.saveUpdatedDescription(newDescription) // Call to save updated description
             self?.navigationController?.popViewController(animated: true)
         }
         
@@ -65,7 +70,7 @@ class TaskViewController: UIViewController {
         }
     }
     
-    // Save description update
+    // Save description update and update timestamp
     func saveUpdatedDescription(_ newDescription: String) {
         guard let index = taskIndex else {
             print("Task index is not set.")
@@ -75,10 +80,18 @@ class TaskViewController: UIViewController {
         UserDefaults.standard.set(newDescription, forKey: "task_description_\(index)")
         descriptionLabel.text = newDescription
         
-        print("Updated description for task at index \(index)")
+        // Update the timestamp when description is saved
+        let currentDate = Date() // Current date and time
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let formattedDate = dateFormatter.string(from: currentDate)
+        
+        UserDefaults.standard.set(formattedDate, forKey: "task_timestamp_\(index)")
+        
+        print("Updated description and timestamp for task at index \(index)")
     }
     
-    // Load task details function
+    // Load task details function, including timestamp
     func loadTaskDetails() {
         self.view.backgroundColor = .gray
 
@@ -90,6 +103,10 @@ class TaskViewController: UIViewController {
         // Retrieve description from the selected task
         let description = UserDefaults.standard.string(forKey: "task_description_\(index)") ?? "No description"
         descriptionLabel.text = description
+
+        // Load and display the timestamp if available
+        let timestamp = UserDefaults.standard.string(forKey: "task_timestamp_\(index)") ?? "No timestamp"
+        print("Task created/updated at: \(timestamp)")
     }
     
     // Confirm before deleting
@@ -130,19 +147,23 @@ class TaskViewController: UIViewController {
         // Remove the task and its description
         UserDefaults.standard.removeObject(forKey: "task_\(index)")
         UserDefaults.standard.removeObject(forKey: "task_description_\(index)")
+        UserDefaults.standard.removeObject(forKey: "task_timestamp_\(index)") // Remove timestamp
         
         // Shift tasks to fill the gap
         for i in index..<count-1 {
             let nextTask = UserDefaults.standard.string(forKey: "task_\(i + 1)")
             let nextDescription = UserDefaults.standard.string(forKey: "task_description_\(i + 1)")
+            let nextTimestamp = UserDefaults.standard.string(forKey: "task_timestamp_\(i + 1)")
             
             UserDefaults.standard.set(nextTask, forKey: "task_\(i)")
             UserDefaults.standard.set(nextDescription, forKey: "task_description_\(i)")
+            UserDefaults.standard.set(nextTimestamp, forKey: "task_timestamp_\(i)")
         }
         
         // Remove the last task and description
         UserDefaults.standard.removeObject(forKey: "task_\(count - 1)")
         UserDefaults.standard.removeObject(forKey: "task_description_\(count - 1)")
+        UserDefaults.standard.removeObject(forKey: "task_timestamp_\(count - 1)")
         
         // Update the count
         count -= 1
@@ -162,21 +183,11 @@ class TaskViewController: UIViewController {
         
         for x in 0..<count {
             let taskKey = "task_\(x)"
-            print("TASK KEY ---", taskKey)
             if let task = UserDefaults.standard.string(forKey: taskKey) {
-                let numberedTask = "\(x + 1). \(task)"  // Numbering the task starting from 1
-
-                print("Task found for key \(taskKey):", task)
-                tasks.append(task)
-                
-                print("Task found for key \(taskKey):", numberedTask)
-                tasks.append(numberedTask)  //Append task with number
-
-            } else {
-                print("No task found for key \(taskKey)")
+                let numberedTask = "\(x + 1). \(task)"
+                tasks.append(numberedTask)
             }
         }
-        
 
         print("ALL TASKS ---", tasks)
     }
